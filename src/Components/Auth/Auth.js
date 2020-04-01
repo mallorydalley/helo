@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux'
+import {getUser} from '../../redux/reducer'
 
 class Auth extends React.Component{
     constructor(){
@@ -11,17 +13,26 @@ class Auth extends React.Component{
     }
     handleRegister = () => {
         const {username, password} = this.state;
-        axios.post(`/api/register`, {username, password})
+        axios.post(`/auth/register`, {username, password})
         .then(res => {
+            this.props.getUser(res.data.username, res.data.profile_pic)
+            console.log(res.data)
+            // console.log(res.data.username)
+            // console.log(res.data.profile_pic)
             this.props.history.push('/dashboard')
         })
+        .catch(err => console.log(err))
     }
     handleLogin = () => {
         const {username, password} = this.state;
-        axios.post(`/api/login`, {username, password})
+        axios.post(`/auth/login`, {username, password})
         .then(res => {
+            console.log(res.data)
+            this.props.getUser(res.data.username, res.data.profile_pic)
+            // this.props.getUser()
             this.props.history.push('/dashboard')
         })
+        .catch(err => console.log(err))
     }
     handleInput = (e) => {
         this.setState({
@@ -36,6 +47,7 @@ class Auth extends React.Component{
                         <span>Username:</span>
                         <input 
                             placeholder='Username'
+                            value={this.state.username}
                             name='username'
                             onChange = {e => this.handleInput(e)}
                         />
@@ -44,6 +56,7 @@ class Auth extends React.Component{
                         <span>Password:</span>
                         <input 
                             placeholder='password'
+                            value={this.state.password}
                             type='password'
                             name='password'
                             onChange={e => this.handleInput(e)}
@@ -57,4 +70,4 @@ class Auth extends React.Component{
     }
 }
 
-export default Auth
+export default connect(null, {getUser})(Auth)

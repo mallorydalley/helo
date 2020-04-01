@@ -1,4 +1,5 @@
 import React from 'react';
+import './Nav.css';
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
@@ -9,24 +10,34 @@ class Nav extends React.Component {
         
     }
     handleLogout = () => {
-        axios.get(`/api/logout`)
+        axios.get(`/auth/logout`)
         .then(() => {
             this.props.history.push('/')
         })
         .catch(err => console.log(err))
     }
     render() {
-        // console.log(props)
+        console.log(this.props)
+        // console.log(this.props.username)
         return (
-            <div>
-                <button>Home</button>
-                <button>New Post</button>
-                <button onClick={this.handleLogout}>Logout</button>
+            <div className='nav-bar'>
+                <div className='top-nav-buttons'>
+                    <img className='profile-pic' src={this.props.profile_pic}/>
+                    <h5>{this.props.username}</h5>
+                    <button onClick={() => this.props.history.push('/dashboard')}>Home</button>
+                    <button onClick={() => this.props.history.push('/new')}>New Post</button>
+                </div>
+                <div className='logout-button'>
+                    <button onClick={this.handleLogout}>Logout</button>
+                </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = reduxState => reduxState;
+const mapStateToProps = reduxState => {
+    const {username, profile_pic} = reduxState
+    return {username, profile_pic}
+}
 
 export default withRouter(connect(mapStateToProps)(Nav))

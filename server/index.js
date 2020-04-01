@@ -4,6 +4,7 @@ const express = require('express'),
     session = require('express-session'),
     { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env,
     ctrl = require('./controller.js'),
+    postCtrl = require(`./postController`),
     port = SERVER_PORT,
     app = express();
 
@@ -25,9 +26,13 @@ massive({
 })
 
 //authentication endpoints
-app.post(`/api/register`, ctrl.register)
-app.post(`/api/login`, ctrl.login)
-app.get(`/api/logout`, ctrl.logout)
+app.post(`/auth/register`, ctrl.register)
+app.post(`/auth/login`, ctrl.login)
+app.get(`/auth/logout`, ctrl.logout)
+
+//post endpoints
+app.get(`/api/all-posts/:id/?userposts=:userposts&search=:search`, postCtrl.getAllPosts)
+app.get(`/api/post/:post_id`, postCtrl.getOnePost)
 
 
 app.listen(port, () => console.log(`Server running on ${port}`));

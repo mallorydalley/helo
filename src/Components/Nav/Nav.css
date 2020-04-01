@@ -1,0 +1,25 @@
+.nav-bar{
+    background-color: palevioletred;
+    height: 100vh;
+    width: 100px;
+    
+    display: flex;
+    flex-direction: column;
+    float: left;
+    justify-content: space-between;
+}
+
+.top-nav-buttons{
+    margin-top: 10px;
+}
+
+.logout-button{
+    margin-bottom: 10px;
+}
+
+.profile-pic {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-color: lightgoldenrodyellow;
+}
