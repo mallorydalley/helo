@@ -28,11 +28,14 @@ massive({
 //authentication endpoints
 app.post(`/auth/register`, ctrl.register)
 app.post(`/auth/login`, ctrl.login)
-app.get(`/auth/logout`, ctrl.logout)
+app.post(`/auth/logout`, ctrl.logout)
 
 //post endpoints
-app.get(`/api/all-posts/:id/?userposts=:userposts&search=:search`, postCtrl.getAllPosts)
-app.get(`/api/post/:post_id`, postCtrl.getOnePost)
+// /:user_id/?userposts=:userposts&search=:search
+app.get(`/api/all-posts/:user_id`, postCtrl.getAllPosts)
+app.get(`/api/post/:post_id`, postCtrl.getOnePost)  //WORKING
+app.post(`/api/post/:user_id`, postCtrl.createPost) //WORKING
+app.delete(`/api/post/:post_id`, postCtrl.deletePost) //WORKING
 
 
 app.listen(port, () => console.log(`Server running on ${port}`));

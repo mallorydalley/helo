@@ -1,7 +1,11 @@
 insert into user_posts (
     user_id,
-    post
+    title,
+    img,
+    content
 ) values (
-    $1, 
-    $2
+    ${user_id}, 
+    ${title},
+    ${img},
+    ${content}
 );

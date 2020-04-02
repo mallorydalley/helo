@@ -15,6 +15,7 @@ module.exports = {
 
         let newUser = await db.register_user({username, password:hash})
         req.session.user = newUser[0];
+        req.session.userid = newUser[0].user_id
         res.status(201).send(req.session.user);
         console.log(req.session.user)
     },
@@ -33,6 +34,7 @@ module.exports = {
         }
         delete user[0].password;
         req.session.user = user[0]
+        req.session.userid = user[0].user_id
         res.status(202).send(req.session.user)
     },
     logout: (req, res) => {

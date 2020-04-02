@@ -10,7 +10,7 @@ class Nav extends React.Component {
         
     }
     handleLogout = () => {
-        axios.get(`/auth/logout`)
+        axios.post(`/auth/logout`)
         .then(() => {
             this.props.history.push('/')
         })
