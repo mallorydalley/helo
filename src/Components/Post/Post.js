@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import {connect} from 'react-redux'
+import './Post.css';
 
 class Post extends React.Component {
     constructor(props){
@@ -22,13 +23,13 @@ class Post extends React.Component {
         })
     }
     render() {
-        console.log(this.props)
-        const { title, img, content, username, profile_pic } = this.state
+        // console.log(this.props)
+        const { title, img, content, username, profile_pic } = this.props
         return (
-            <div>
+            <div className='post-page'>
                 <div className='post-container'>
                     <div className='left-side'>
-                        <span>{title}</span>
+                        <h3>{title}</h3>
                         <img src={img} alt=''/>
                     </div>
                     <div className='right-side'>

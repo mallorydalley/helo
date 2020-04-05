@@ -1,8 +1,8 @@
 import React from 'react';
 import Post from '../Post/Post'
 import axios from 'axios'
-import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import './Dashboard.css'
 
 class Dashboard extends React.Component {
     constructor(props){
@@ -19,16 +19,19 @@ class Dashboard extends React.Component {
     resetInput = () => {
         this.setState({search: ''})
     }
-    
+    handleToggle = () => {
+        this.setState({userposts: !this.state.userposts})
+    }
     componentDidMount(){
         this.getAllPosts()
     }
 
     getAllPosts = (id) => {
         const {userposts, search} = this.state
-        axios.get(`/api/all-posts/${this.props.user_id}/?userposts=${userposts}&search=${search}`)
+        axios.get(`/api/all-posts?userposts=${userposts}&search=${search}`)
         .then(res => {
             this.setState({posts: res.data})
+            console.log(res.data)
         })
         .catch(err => console.log(err))
     }
@@ -42,20 +45,31 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        // console.log(this.props)
         const {search, userposts, posts} = this.state
-        const mappedPosts = posts.map((post, i) => (
-            <Link to='/post/:postid'>
-                <Post 
-                    key={i} 
-                    post={post} 
-                    title={post.title}
-                    img={post.img}
-                    content={post.content}
-                    deletePost={this.deletePost}
-                />
-            </Link>
+
+        const mappedPosts = posts
+        .map((post, i) => (
+            <div className='dash-page'>
+                <Link to='/post/:postid'>
+                    <div className='dash-posts' key={i}>
+                        <div>
+                            <span className='dash-posts-title'>{posts[i].title}</span>
+                        </div>
+
+                        <div className='post-right-side'>
+                            <span className='dash-posts-username'>{posts[i].username}</span>
+                            <img 
+                                className='dash-posts-img' 
+                                src={posts[i].profile_pic}
+                                alt=''
+                            />
+                        </div>
+                    </div>
+                </Link >
+            </div>  
         ))
+        // console.log(this.state.posts[0])
+        // console.log(this.state.userposts)
         return (
             <div>
                 <input 
@@ -68,19 +82,34 @@ class Dashboard extends React.Component {
 
                 <div className='my-posts-checkbox'>
                     <span>My Posts</span>
-                    <input 
-                        type='checkbox'
-                    />      
+                    {userposts
+                    ?(
+                        <input
+                            type='checkbox'
+                            checked
+                            onClick={this.handleToggle}
+                        />  
+                    )
+                    :(
+                        <input
+                            type='checkbox'
+                            onClick={this.handleToggle}
+                        />  
+                    )}
+                        
                 </div>
-                {mappedPosts}
+
+                {/* <div className='mapped-posts'> */}
+                    {mappedPosts}
+                {/* </div> */}
             </div>
         )
     }
 }
 
-const mapStateToProps = reduxState => {
-    let {user_id} = reduxState
-    return {user_id}
-}
+// const mapStateToProps = reduxState => {
+//     let {user_id} = reduxState
+//     return {user_id}
+// }
 
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard;

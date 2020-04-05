@@ -1,16 +1,15 @@
 const initialState = {
     username: '',
-    profile_pic: '',
-    user_id: 0
+    profile_pic: ''
 }
 
 const GET_USER = "GET_USER"
 
-export function getUser(username, profile_pic, user_id){
+export function getUser(username, profile_pic){
     console.log(this.state)
     return {
         type: GET_USER,
-        payload: {username, profile_pic, user_id}
+        payload: {username, profile_pic}
     }
 }
 

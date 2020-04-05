@@ -13,7 +13,7 @@ class Auth extends React.Component{
     }
     handleRegister = () => {
         const {username, password} = this.state;
-        axios.post(`/auth/register`, {username, password})
+        axios.post(`/auth/register`, {password, username})
         .then(res => {
             this.props.getUser(res.data.username, res.data.profile_pic)
             console.log(res.data)

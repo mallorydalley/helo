@@ -14,7 +14,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: SESSION_SECRET,
-    cookie:{maxAge: 100 * 60 * 60}
+    cookie:{maxAge: 100 * 60 * 60 * 24}
 }))
 
 massive({
@@ -29,13 +29,16 @@ massive({
 app.post(`/auth/register`, ctrl.register)
 app.post(`/auth/login`, ctrl.login)
 app.post(`/auth/logout`, ctrl.logout)
+app.get(`/api/auth/me`, ctrl.me)
 
 //post endpoints
 // /:user_id/?userposts=:userposts&search=:search
-app.get(`/api/all-posts/:user_id`, postCtrl.getAllPosts)
+app.get(`/api/all-posts`, postCtrl.getAllPosts)  //WORKING W/O QUERIES
 app.get(`/api/post/:post_id`, postCtrl.getOnePost)  //WORKING
-app.post(`/api/post/:user_id`, postCtrl.createPost) //WORKING
+app.post(`/api/post`, postCtrl.createPost) //WORKING
 app.delete(`/api/post/:post_id`, postCtrl.deletePost) //WORKING
+
+
 
 
 app.listen(port, () => console.log(`Server running on ${port}`));

@@ -1,0 +1,47 @@
+.mapped-posts{
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    background-color: lightcyan;
+    width: 500px;
+    /* min-width: 200px; */
+    height: 100px;
+}
+
+.dash-page{
+    height: 100%;
+    /* width: 500px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.dash-posts{
+    background-color: white;
+    height: 80px;
+    width: 480px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    padding: 0 15px;
+    text-decoration: none;
+    color: rgb(21, 21, 21);
+    box-shadow: 2px 2px 4px 0.3px rgb(213, 213, 213);
+}
+
+.dash-posts-title{
+    font-size: 26px;
+}
+
+.dash-posts-img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0.5px 0.5px 8px 0.3px rgb(167, 167, 167);
+}
