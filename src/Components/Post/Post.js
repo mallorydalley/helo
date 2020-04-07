@@ -14,35 +14,47 @@ class Post extends React.Component {
             profile_pic:''
         }
     }
+    componentDidMount(){
+        this.getPost()
+    }
 
-    getPost = () => {
-        axios.get(`/api/post/${this.props.match.params.post_id}`)
-        .then(res => {
-            const {title, img, content, username, profile_pic} = res.data
+    getPost(){
+        axios.get(`/api/post/${this.props.match.params.postid}`)
+        .then(result => {
+            console.log(result.data)
+            const {title, img, content, username, profile_pic} = result.data[0]
             this.setState({ title, img, content, username, profile_pic})
         })
+        .catch(err => console.log(err))
     }
     render() {
-        // console.log(this.props)
-        const { title, img, content, username, profile_pic } = this.props
+        console.log(this.props.match.params)
+        // console.log(this.props.match.params.post_id)
+        const { title, img, content, username, profile_pic } = this.state
+        
         return (
             <div className='post-page'>
                 <div className='post-container'>
                     <div className='left-side'>
-                        <h3>{title}</h3>
-                        <img src={img} alt=''/>
+                        <p className='post-title'>{title}</p>
+                        <img 
+                        className='post-img' src={img} alt=''/>
                     </div>
                     <div className='right-side'>
                         <div className='user-info'>
                             <span>{username}</span>
-                            <img src={profile_pic} alt='' />
+                            <img 
+                                className='profile-pic' 
+                                src={profile_pic} alt='' />
                         </div>
-                        <p>{content}</p>
-                    </div>
+
+                        <p className='content'>{content}</p>
+                    
                     {/* Gotta make conditional rendering for Delete button*/}
                     {/* {user_id = this.props.user_id} */}
 
                     <button onClick={this.props.deletePost}>Delete Post</button>
+                    </div>
                 </div>
             </div>
         )

@@ -1,17 +1,17 @@
 module.exports = {
     getAllPosts: (req, res) => {
-        // const {userposts, search} = req.query
+        const {userposts, search} = req.query
         const {user_id} = req.session;
         const db = req.app.get('db')
 
-        db.posts.get_all_posts(user_id)
+        db.posts.get_all_posts(+user_id)
             .then(result => res.status(200).send(result))
             .catch(err => {
                 res.status(500).send('Oops! Failed to retrieve posts.')
                 console.log(err)
             })
 
-        // db.posts.get_all_posts(+id)
+        // db.posts.get_all_posts(user_id)
         // .then(posts => {
         //     if(userposts === true && search !== ''){
         //         return res.status(200).send(posts.includes(search))
@@ -36,7 +36,7 @@ module.exports = {
         const db = req.app.get('db')
 
         db.posts.get_one_post(post_id)
-        .then(post => res.status(200).send(post))
+            .then(post => res.status(200).send(post))
             .catch(err => {
                 res.status(500).send(`Oops! Couldn't get that post.`)
                 console.log(err)

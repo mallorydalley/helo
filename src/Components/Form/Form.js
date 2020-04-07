@@ -24,8 +24,8 @@ class Form extends React.Component {
         })
     }
     render() {
-        console.log(this.props)
-        const {title, image, content} = this.state
+        // console.log(this.props)
+        const {title, img, content} = this.state
         return (
             <div className='new-post-form'>
                 <h1>New Post</h1>
@@ -38,14 +38,14 @@ class Form extends React.Component {
                 </div>
 
             <div className='form-image'>
-                <img className='image' src={image} alt={title} />
+                <img className='image' src={img} alt={title} />
             </div>
 
             <div className='input-container'>
                 <h4>Image URL: </h4>
                 <input
-                    value={image}
-                    name='image'
+                    value={img}
+                    name='img'
                     type='text'
                     onChange={e => this.handleInput(e)} />
             </div>

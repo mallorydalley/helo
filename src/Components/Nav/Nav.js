@@ -28,7 +28,7 @@ class Nav extends React.Component {
     }
     
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         // console.log(this.props.username)
         return (
             <div className='nav-bar'>

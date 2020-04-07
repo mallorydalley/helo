@@ -49,8 +49,9 @@ class Dashboard extends React.Component {
 
         const mappedPosts = posts
         .map((post, i) => (
+            // console.log(posts[i].post_id),
             <div className='dash-page'>
-                <Link to='/post/:postid'>
+                <Link to={`/post/${posts[i].post_id}`}>
                     <div className='dash-posts' key={i}>
                         <div>
                             <span className='dash-posts-title'>{posts[i].title}</span>
@@ -67,9 +68,10 @@ class Dashboard extends React.Component {
                     </div>
                 </Link >
             </div>  
+            
         ))
         // console.log(this.state.posts[0])
-        // console.log(this.state.userposts)
+        // console.log(posts.post_id)
         return (
             <div>
                 <input 
