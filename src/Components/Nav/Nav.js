@@ -8,16 +8,15 @@ import { getUser } from '../../redux/reducer'
 class Nav extends React.Component {
   
     componentDidMount() {
-        axios.get(`/api/auth/me`)
-            .then(res => {
-                // this.props.getUser(res.data.username, res.data.profile_pic)
-            })
+        this.getMe()
     }
-    getUserInfo = () => {
+    getMe = () => {
         axios.get(`/api/auth/me`)
             .then(res => {
-                // this.props.getUser(res.data.username, res.data.profile_pic)
+                console.log(res.data)
+                this.props.getUser(res.data[0].username, res.data[0].profile_pic)
             })
+            .catch(err => console.log(err))
     }
     handleLogout = () => {
         axios.post(`/auth/logout`)
@@ -28,8 +27,7 @@ class Nav extends React.Component {
     }
     
     render() {
-        // console.log(this.props)
-        // console.log(this.props.username)
+        console.log(this.props)
         return (
             <div className='nav-bar'>
                 <div className='top-nav-buttons'>

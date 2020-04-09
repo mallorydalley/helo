@@ -14,7 +14,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: SESSION_SECRET,
-    cookie:{maxAge: 100 * 60 * 60 * 24}
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }))
 
 massive({
@@ -32,11 +32,12 @@ app.post(`/auth/logout`, ctrl.logout)
 app.get(`/api/auth/me`, ctrl.me)
 
 //post endpoints
-// /:user_id/?userposts=:userposts&search=:search
-app.get(`/api/all-posts`, postCtrl.getAllPosts)  //WORKING W/O QUERIES
-app.get(`/api/post/:post_id`, postCtrl.getOnePost)  //WORKING
-app.post(`/api/post`, postCtrl.createPost) //WORKING
-app.delete(`/api/post/:post_id`, postCtrl.deletePost) //WORKING
+// app.get(`/api/all-posts`, postCtrl.getAllPosts)  //WORKING W/O QUERIES
+    // /? userposts =: userposts & search=: search
+app.get(`/api/all-posts`, postCtrl.getAllPosts)
+app.get(`/api/post/:post_id`, postCtrl.getOnePost)  
+app.post(`/api/post`, postCtrl.createPost) 
+app.delete(`/api/post/:post_id`, postCtrl.deletePost) 
 
 
 

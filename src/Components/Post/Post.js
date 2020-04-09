@@ -27,11 +27,13 @@ class Post extends React.Component {
         })
         .catch(err => console.log(err))
     }
+
     render() {
-        console.log(this.props.match.params)
-        // console.log(this.props.match.params.post_id)
+        console.log(this.session) 
+        console.log(this.state.username)
+        console.log(this.props.deletePost)
         const { title, img, content, username, profile_pic } = this.state
-        
+        const {postid} = this.props.match.params
         return (
             <div className='post-page'>
                 <div className='post-container'>
@@ -52,8 +54,8 @@ class Post extends React.Component {
                     
                     {/* Gotta make conditional rendering for Delete button*/}
                     {/* {user_id = this.props.user_id} */}
-
-                    <button onClick={this.props.deletePost}>Delete Post</button>
+                    {/* {username === this.props.username} */}
+                        <button onClick={() => this.props.deletePost(postid)}>Delete Post</button>
                     </div>
                 </div>
             </div>

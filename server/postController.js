@@ -1,35 +1,34 @@
 module.exports = {
-    getAllPosts: (req, res) => {
+    getAllPosts: async (req, res) => {
         const {userposts, search} = req.query
         const {user_id} = req.session;
         const db = req.app.get('db')
 
-        db.posts.get_all_posts(+user_id)
-            .then(result => res.status(200).send(result))
-            .catch(err => {
-                res.status(500).send('Oops! Failed to retrieve posts.')
-                console.log(err)
-            })
+        //Userposts is TRUE and there IS a search
+        if (userposts === 'true' && search !== '' ){
+            let getPosts = await db.posts.get_all_posts();
+            let filterPost = getPosts.filter(post => post.title.includes(search))
+            return res.status(200).send(filterPost)
+        }
+        //Userposts is FALSE and NO search 
+        if(userposts === 'false' && search === ''){
+            let getPosts = await db.posts.get_all_posts();
+            let filterPost = getPosts.filter(post => (post.user_id !== user_id)? post : null)
+            return res.status(200).send(filterPost)
+        }
+        //Userposts is FALSE and there IS a search
+        if(userposts === 'false' && search !== ''){
+            let getPosts = await db.posts.get_all_posts();
+            let notMyPost = getPosts.filter(post => (post.user_id !== user_id)? post : null);
+            let filterPost = notMyPost.filter(post => post.title.includes(search));
+            return res.status(200).send(filterPost)
+        }
 
-        // db.posts.get_all_posts(user_id)
-        // .then(posts => {
-        //     if(userposts === true && search !== ''){
-        //         return res.status(200).send(posts.includes(search))
-        //     }
-        //     if (userposts === false && search === '') {
-        //         return res.status(200).send(posts)
-        //     }
-        //     if (userposts === false && search !== ''){
-        //         return res.status(200).send(posts)  ///this needs to be changed
-        //     }
-        //     if (userposts === true && search === ''){
-        //         return res.status(200).send(posts)
-        //     }
-        // })
-        //     .catch(err => {
-        //         res.status(500).send(`Oops! Fetch posts failed.`)
-        //         console.log(err)
-        //     })
+        //Userposts is TRUE and there is NO search WORKING
+        if (userposts === 'true' && search === '') {
+            let getPosts = await db.posts.get_all_posts()
+            return res.status(200).send(getPosts)
+        }
     },
     getOnePost: (req, res) => {
         const {post_id} = req.params 
